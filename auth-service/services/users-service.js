@@ -1,29 +1,15 @@
 module.exports = class UsersService {
-    constructor() {
+  constructor() {}
 
-    }
+  async create(user) {}
 
-    async create(user) {
+  async findById(id) {}
 
-    }
+  async findByEmail(email) {}
 
-    async findById(id) {
+  async signUp(user) {}
 
-    }
+  async signIn(email, password) {}
 
-    async findByEmail(email) {
-
-    }
-
-    async signUp(user) {
-
-    }
-
-    async signIn(email, password) {
-        
-    }
-
-    generateAccessToken(user) {
-
-    }
-}
+  generateAccessToken(user) {}
+};

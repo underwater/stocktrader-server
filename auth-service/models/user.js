@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = require("mongoose").Schema;
+const Joi = require("joi");
 
 
 const User = mongoose.model(
@@ -30,5 +31,21 @@ const User = mongoose.model(
   )
 );
 
+const EmailSchema = Joi.string().email().required();
+const PasswordSchema = Joi.string().min(6).required();
+
+const SignUpSchema = Joi.object({
+    firstName: Joi.string().alphanum().required(),
+    lastName: Joi.string().alphanum().required(),
+    email: EmailSchema,
+    password: PasswordSchema
+});
+
+const SignInSchema = Joi.object({
+    email: EmailSchema,
+    password: PasswordSchema
+});
 
 module.exports = User;
+module.exports.SignUpSchema = SignUpSchema;
+module.exports.SignInSchema = SignInSchema;

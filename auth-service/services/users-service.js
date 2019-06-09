@@ -1,7 +1,9 @@
 module.exports = class UsersService {
   constructor() {}
 
-  async create(user) {}
+  async create(user) {
+    
+  }
 
   async findById(id) {}
 

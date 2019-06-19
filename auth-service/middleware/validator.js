@@ -2,14 +2,14 @@ const ValidationError = require("../errors/validation-error");
 const Joi = require("joi");
 const User = require("../models/user");
 
-const validators = [{
+const validators = {
     "User": {
         scopes: {
             'signup': User.SignUpSchema,
             'signin': User.SignInSchema
         }
     }
-}];
+};
 
 function scopeExists(validator, scope) {
     return (Object.keys(validator.scopes).find(s => s == scope) != undefined);

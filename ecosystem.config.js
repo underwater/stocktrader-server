@@ -10,6 +10,7 @@ module.exports = {
         watch: true,
         ignore_watch: ["./.git"],
         env: {
+            NODE_ENV: "development",
             MONGO_HOST: "localhost",
             MONGO_PORT: 27018,
             MONGO_USERNAME: "root",

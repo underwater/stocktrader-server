@@ -12,7 +12,12 @@ function authenticationErrorHandler(err, req, res, next) {
 
 function validationErrorHandler(err, req, res, next) {
     if(err instanceof ValidationError) {
-        return res.sendStatus(400);
+        if (process.env.NODE_ENV == "development") {
+            return res.status(400).send(err.message);
+        }
+        else {
+            return res.sendStatus(400);
+        }
     }
     next(err);
 }

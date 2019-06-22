@@ -1,42 +1,48 @@
 const mongoose = require("mongoose");
-const Schema = require("mongoose").Schema;
+const Schema = mongoose.Schema;
 const Joi = require("joi");
 
-
-const User = mongoose.model(
-  "User",
-  new Schema(
+const UserSchema = new Schema(
     {
-      firstName: {
-        type: String,
-        required: true
-      },
-      lastName: {
-        type: String,
-        required: true
-      },
-      email: {
-        type: String,
-        required: true,
-        unique: true
-      },
-      password: {
-        type: String,
-        required: true
-      }
+        firstName: {
+            type: String,
+            required: true
+        },
+        lastName: {
+            type: String,
+            required: true
+        },
+        email: {
+            type: String,
+            required: true,
+            unique: true
+        },
+        password: {
+            type: String,
+            required: true
+        }
     },
     {
-      timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" }
+        timestamps: { createdAt: "createdAt", updatedAt: "updatedAt" }
     }
-  )
 );
 
-const EmailSchema = Joi.string().email().required();
-const PasswordSchema = Joi.string().min(6).required();
+const User = mongoose.model("User", UserSchema);
+
+const EmailSchema = Joi.string()
+    .email()
+    .required();
+const PasswordSchema = Joi.string()
+    .min(6)
+    .required();
 
 const SignUpSchema = Joi.object({
-    firstName: Joi.string().alphanum().required(),
-    lastName: Joi.string().alphanum().required(),
+    firstName: Joi.string()
+        .alphanum()
+        .required(),
+    lastName: Joi.string()
+        .alphanum()
+        .required(),
     email: EmailSchema,
     password: PasswordSchema
 });

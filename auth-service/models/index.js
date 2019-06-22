@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const User = require("./user");
 
 mongoose.Promise = global.Promise;  //A+ Promise
-
+//MongoDB connection URI-->  mongodb://username:password@hostname:port/database
 const connectionString = `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/authentication`;
 
 module.exports = function() {

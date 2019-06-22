@@ -3,16 +3,16 @@ const Joi = require("joi");
 const User = require("../models/user");
 
 const validators = {
-    "User": {
+    User: {
         scopes: {
-            'signup': User.SignUpSchema,
-            'signin': User.SignInSchema
+            signup: User.SignUpSchema,
+            signin: User.SignInSchema
         }
     }
 };
 
 function scopeExists(validator, scope) {
-    return (Object.keys(validator.scopes).find(s => s == scope) != undefined);
+    return Object.keys(validator.scopes).find(s => s == scope) != undefined;
 }
 
 function getSchema(model, scope) {
@@ -21,19 +21,18 @@ function getSchema(model, scope) {
         throw new ValidationError("Validator doesn't exist");
     }
     if (validator.scopes) {
-        if(scope) {
+        if (scope) {
             if (!scopeExists(validator, scope)) {
-                throw new ValidationError(`Scope ${scope} not found in model ${model}`);
-            }
-            else {
+                throw new ValidationError(
+                    `Scope ${scope} not found in model ${model}`
+                );
+            } else {
                 return validator.scopes[scope];
             }
+        } else {
+            return validator.scopes["default"];
         }
-        else {
-            return validator.scopes['default'];
-        }
-    }
-    else {
+    } else {
         return validator;
     }
 }
@@ -52,11 +51,10 @@ module.exports = function ValidatorMiddlewareFactory(options) {
     return (req, res, next) => {
         let schema = getSchema(model, scope);
         let result = Joi.validate(req[source], schema);
-        if (result.error){
+        if (result.error) {
             throw new ValidationError(result.error.message);
-        }
-        else {
+        } else {
             next();
         }
-    }
-}
+    };
+};

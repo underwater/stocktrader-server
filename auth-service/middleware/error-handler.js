@@ -1,12 +1,18 @@
 const ValidationError = require("../errors/validation-error");
+const AuthenticationError = require("../errors/authentication-error");
 
 function errorLogger(err, req, res, next) {
     // Log error
+    console.error(err);
     next(err);
 }
 
+/** ----------- */
+
 function authenticationErrorHandler(err, req, res, next) {
-    // Check if the error is an AuthenticationError --> 401
+    if (err instanceof AuthenticationError) {
+        return res.sendStatus(401);
+    }
     next(err);
 }
 

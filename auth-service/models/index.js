@@ -8,6 +8,7 @@ mongoose.Promise = global.Promise;  //A+ Promise
 const connectionString = `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/authentication`;
 
 module.exports = function() {
+    console.log(`Connecting to ${connectionString}`);
     return new Promise((resolve, reject) => {
         mongoose.connection.on("open", () => {
             resolve(mongoose);
@@ -18,7 +19,8 @@ module.exports = function() {
         });
 
         mongoose.connect(connectionString, {
-            useNewUrlParser: true
+            useNewUrlParser: true,
+            authSource: "admin"
         });
     });
 }

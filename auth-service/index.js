@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
+const cors = require("cors");
 const ErrorHandler = require("./middleware/error-handler");
 const mongooseConnector = require("./models");
 
@@ -13,7 +14,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(morgan("combined"));
-
+app.use(cors());
 app.use("/api/auth", AuthController);
 
 app.use(ErrorHandler());

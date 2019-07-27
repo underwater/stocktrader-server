@@ -34,5 +34,9 @@ module.exports = {
             AUTH_SECRET,
             PORT: 3002
         }
+    }, {
+        name: "main-gateway",
+        script: "./main-gateway/server.js",
+        watch: true
     }]
 }

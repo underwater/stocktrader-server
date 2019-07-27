@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use(morgan("combined"));
 app.use(cors());
 
-app.use("/api/pricing", PricingController);
+app.use("", PricingController);
 
 app.use(ErrorHandler());
 app.listen(PORT, () => {

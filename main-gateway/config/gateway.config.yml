@@ -1,0 +1,39 @@
+http:
+  port: 8080
+  hostname: 0.0.0.0
+apiEndpoints:
+  auth-service:
+    host: "*"
+    paths: ["/api/auth/*", "/api/auth/"]
+  pricing-service:
+    host: "*"
+    paths: ["/api/pricing/*"]
+serviceEndpoints:
+  auth-service-endpoint:
+      url: http://localhost:3001/
+  pricing-service-endpoint:
+      url: http://localhost:3002/
+policies:
+  - proxy
+pipelines:
+  # see: https://www.express-gateway.io/docs/configuration/gateway.config.yml/pipelines
+  auth-service-pipeline:
+    apiEndpoints:
+      - auth-service
+    policies:
+      -
+        proxy:
+          action:
+            serviceEndpoint: auth-service-endpoint
+            changeOrigin: true
+            stripPath: true
+  pricing-service-pipeline:
+    apiEndpoints:
+      - pricing-service
+    policies:
+      -
+        proxy:
+          action:
+            serviceEndpoint: pricing-service-endpoint
+            changeOrigin: true
+            stripPath: true

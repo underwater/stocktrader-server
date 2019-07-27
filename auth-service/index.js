@@ -15,7 +15,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(morgan("combined"));
 app.use(cors());
-app.use("/api/auth", AuthController);
+app.use("", AuthController);
 
 app.use(ErrorHandler());
 mongooseConnector().then(() => {

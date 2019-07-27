@@ -18,7 +18,21 @@ module.exports = {
             TOKEN_ISSUER,
             AUDIENCE,
             AUTH_SECRET,
-            TOKEN_LIFESPAN: "1 day"
+            TOKEN_LIFESPAN: "1 day",
+            PORT: 3001
+        }
+    }, {
+        name: "pricing-service",
+        script: "./pricing-service/index.js",
+        node_args: ["--inspect=0.0.0.0:9225"],
+        watch: true,
+        ignore_watch: ["./.git"],
+        env: {
+            NODE_ENV: "development",
+            TOKEN_ISSUER,
+            AUDIENCE,
+            AUTH_SECRET,
+            PORT: 3002
         }
     }]
 }

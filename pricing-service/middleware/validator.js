@@ -1,8 +1,13 @@
 const ValidationError = require("../errors/validation-error");
 const Joi = require("joi");
+const Price = require("../models/price");
 
 const validators = {
-
+    Price: {
+        scopes: {
+            stock: Price.PriceSchema
+        }
+    }
 };
 
 function scopeExists(validator, scope) {

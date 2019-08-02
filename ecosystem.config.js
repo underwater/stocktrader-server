@@ -1,5 +1,5 @@
 const TOKEN_ISSUER = "stocktrader";
-const AUDIENCE = "all-apis";
+const AUDIENCE = "all";
 const AUTH_SECRET = "hasuyftads97ifya9sdyfoas7dfyas90dfa";
 
 module.exports = {

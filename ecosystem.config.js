@@ -32,7 +32,8 @@ module.exports = {
             TOKEN_ISSUER,
             AUDIENCE,
             AUTH_SECRET,
-            PORT: 3002
+            PORT: 3002,
+            PRICE_INTERVAL: 500
         }
     }, {
         name: "main-gateway",

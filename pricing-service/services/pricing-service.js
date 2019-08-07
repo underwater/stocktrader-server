@@ -1,6 +1,6 @@
 function randomFeed(stock, min, max) {
     function rand(min, max) {
-        return (( Math.random()*100 ) % (max - min) + min).toFixed(2);
+        return ((Math.random() * 100) % (max - min) + min).toFixed(2);
     }
     return () => {
         return {
@@ -25,5 +25,14 @@ module.exports = class PricingService {
 
     getCurrentPrice(stock) {
         return this.availableStocks[stock]();
+    }
+
+    getAllPrices() {
+        return new Promise((resolve, reject) => {
+            let prices = Object.keys(this.availableStocks).map(key => {
+                return this.availableStocks[key]();
+            });
+            resolve(prices);
+        });
     }
 };

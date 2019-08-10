@@ -20,19 +20,24 @@ const io = require("socket.io")(server);
 io.on("connection", socket => {
     console.log("Client connected");
 
+    let watcher;
     socket.on("disconnect", () => {
-        console.log("client disconnected");
+        if (watcher) {
+            watcher.stop();
+        }
     });
 
-    let watcher;
     socket.on("startPriceWatch", message => {
+        console.log(message);
         if (watcher) {
             watcher.stop();
         }
         message = message ? JSON.parse(message) : null;
         let stocks = message ? message.stocks : null;
+        console.log(stocks);
         watcher = pricingService.watchLivePrices(stocks, (err, prices) => {
             if (!err) {
+                console.log(prices); //[{name: '', price}]
                 socket.emit("stockPricesChanged", prices);
             }
             else {
@@ -42,7 +47,9 @@ io.on("connection", socket => {
     });
 
     socket.on("stopPriceWatch", () => {
-        watcher.stop();
+        if (watcher) {
+            watcher.stop();
+        }
     });
 });
 

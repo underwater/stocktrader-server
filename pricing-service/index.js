@@ -24,11 +24,26 @@ io.on("connection", socket => {
         console.log("client disconnected");
     });
 
-    setInterval(async() => {
-        let currentPrices = await pricingService.getAllPrices();
-        io.emit("stockPricesChanged", currentPrices);
-    }, PRICE_INTERVAL);
+    let watcher;
+    socket.on("startPriceWatch", message => {
+        if (watcher) {
+            watcher.stop();
+        }
+        message = message ? JSON.parse(message) : null;
+        let stocks = message ? message.stocks : null;
+        watcher = pricingService.watchLivePrices(stocks, (err, prices) => {
+            if (!err) {
+                socket.emit("stockPricesChanged", prices);
+            }
+            else {
+                console.error(err);
+            }
+        });
+    });
 
+    socket.on("stopPriceWatch", () => {
+        watcher.stop();
+    });
 });
 
 app.use(bodyParser.json());

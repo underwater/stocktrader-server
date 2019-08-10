@@ -35,4 +35,34 @@ module.exports = class PricingService {
             resolve(prices);
         });
     }
+
+    /**
+     *
+     * @param {string[]} stocks
+     * @param {*} callback
+     */
+    watchLivePrices(stocks, callback) {
+        try {
+            if (!stocks) {
+                stocks = Object.keys(this.availableStocks)
+            }
+            if (!Array.isArray(stocks)) {
+                stocks = [stocks];
+            }
+            let intervalToken = setInterval(() => {
+                let prices = stocks.map(stock => {
+                    return this.getCurrentPrice(stock);
+                });
+                callback(null, prices);
+            }, process.env.PRICE_INTERVAL);
+            return {
+                stop: () => {
+                    clearInterval(intervalToken);
+                }
+            }
+        }
+        catch(err) {
+            callback(err);
+        }
+    }
 };

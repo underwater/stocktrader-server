@@ -1,3 +1,5 @@
+//TODO: IN asp.net routing precedes instatiating controllers, but here it seems that the routing is happening after this controller is loaded?
+
 const router = require("express").Router();
 const asyncWrapper = require("../../utilities/async-wrapper").AsyncWrapper;
 const UsersService = require("../services/users-service");
@@ -12,6 +14,7 @@ const usersService = new UsersService();
 ///TODO: clicking F12 on post method doesn't give a helpful index.d.ts
 
 router.post(
+    // TODO: is defining the names of the properties of this object essential syntax or could we have said { "User", "signup", "body" }
     "/signup", [validator({ model: "User", scope: "signup", source: "body" })],
     asyncWrapper(async(req, res) => {
         let existingUser = await usersService.findByEmail(req.body.email);

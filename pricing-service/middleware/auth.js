@@ -8,8 +8,7 @@ module.exports = function AuthMiddleware(req, res, next) {
     let authorizationHeader = req.headers.authorization;
     if (!authorizationHeader) {
         next(new AuthenticationError(`Token is missing from the request`));
-    }
-    else {
+    } else {
         try {
             // Bearer <TOKEN>
             let parsed = authorizationHeader.split(" ");
@@ -20,9 +19,8 @@ module.exports = function AuthMiddleware(req, res, next) {
             });
             req.user = result.user;
             next();
-        }
-        catch(e) {
+        } catch (e) {
             next(new AuthenticationError(`Token not found`));
         }
     }
-}
+};

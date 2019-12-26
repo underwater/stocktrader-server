@@ -3,7 +3,6 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
 
-//TODO:
 const ErrorHandler = require("./middleware/error-handler");
 const mongooseConnector = require("./models");
 

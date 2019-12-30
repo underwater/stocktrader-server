@@ -17,12 +17,8 @@ app.use(bodyParser.json());
 app.use(morgan("combined"));
 app.use(cors());
 
-///TODO: since '' path is default, could this have been simply app.use(AuthController);
-//TODO: app.use(xx), xx is a middleware, or path / controller,
-// TODO: where does routing fit in here?
 app.use("", AuthController);
 
-// TODO: what is difference use(ErrorHandler()) or use(ErrorHandler), was the () needed because we wanted the return of invoking the function (array of handlers) not the factory itself ?
 app.use(ErrorHandler());
 
 mongooseConnector()

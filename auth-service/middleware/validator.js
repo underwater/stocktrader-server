@@ -37,14 +37,12 @@ function getSchema(model, scope) {
     }
 }
 
-//TODO: this is jsdoc, who can consume this ? VS  Any editor capable of reading jsdoc? this has nothing to do with typescript typing right ?
 /**
  * @param {object} options
  * @param {string} [options.model]
  * @param {string} [options.scope]
  * @param {string} [options.source]
  */
-//TODO: ValidatorMiddlewareFactory being exported by used under different name?
 module.exports = function ValidatorMiddlewareFactory(options) {
     let model = options.model;
     let scope = options.scope;
@@ -53,7 +51,6 @@ module.exports = function ValidatorMiddlewareFactory(options) {
     return (req, res, next) => {
         let schema = getSchema(model, scope);
 
-        // TODO: f12 on validate method doesn't go anywhere?
         let result = Joi.validate(req[source], schema);
         if (result.error) {
             throw new ValidationError(result.error.message);

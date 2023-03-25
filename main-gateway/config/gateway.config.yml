@@ -1,39 +1,48 @@
+# Define HTTP server settings
 http:
-  port: 8080
-  hostname: 0.0.0.0
+  port: 8080      # Port to listen on
+  hostname: 0.0.0.0  # Hostname to bind to (0.0.0.0 means all available network interfaces)
+
+# Define API endpoints
 apiEndpoints:
-  auth-service:
-    host: "*"
-    paths: ["/api/auth/*", "/api/auth/"]
-  pricing-service:
-    host: "*"
-    paths: ["/api/pricing/*"]
+  auth-service:   # Name of the auth-service API endpoint
+    host: "*"     # Allow requests from any host
+    paths: ["/api/auth/*", "/api/auth/"]   # Allow requests with these paths
+  pricing-service:   # Name of the pricing-service API endpoint
+    host: "*"     # Allow requests from any host
+    paths: ["/api/pricing/*"]   # Allow requests with these paths
+
+# Define service endpoints (backend servers)
 serviceEndpoints:
-  auth-service-endpoint:
-      url: http://localhost:3001/
-  pricing-service-endpoint:
-      url: http://localhost:3002/
+  auth-service-endpoint:    # Name of the auth-service backend server endpoint
+      url: http://localhost:3001/   # URL of the auth-service backend server
+  pricing-service-endpoint:    # Name of the pricing-service backend server endpoint
+      url: http://localhost:3002/   # URL of the pricing-service backend server
+
+# Define policies to be used
 policies:
-  - proxy
+  - proxy     # Use the proxy policy
+
+# Define pipelines, which specify how requests are processed
 pipelines:
-  # see: https://www.express-gateway.io/docs/configuration/gateway.config.yml/pipelines
+  # Pipeline for the auth-service endpoint
   auth-service-pipeline:
     apiEndpoints:
-      - auth-service
+      - auth-service   # Use the auth-service API endpoint
     policies:
-      -
-        proxy:
+      - proxy:
           action:
-            serviceEndpoint: auth-service-endpoint
-            changeOrigin: true
-            stripPath: true
+            serviceEndpoint: auth-service-endpoint   # Use the auth-service backend server
+            changeOrigin: true   # Rewrite the host header to match the target server
+            stripPath: true      # Strip the API path from the request before sending to the backend server
+
+  # Pipeline for the pricing-service endpoint
   pricing-service-pipeline:
     apiEndpoints:
-      - pricing-service
+      - pricing-service   # Use the pricing-service API endpoint
     policies:
-      -
-        proxy:
+      -  proxy:
           action:
-            serviceEndpoint: pricing-service-endpoint
-            changeOrigin: true
-            stripPath: true
+            serviceEndpoint: pricing-service-endpoint   # Use the pricing-service backend server
+            changeOrigin: true   # Rewrite the host header to match the target server
+            stripPath: true      # Strip the API path from the request before sending to the backend server

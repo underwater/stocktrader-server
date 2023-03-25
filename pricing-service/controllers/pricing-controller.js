@@ -20,4 +20,14 @@ router.get(
     })
 );
 
+
+router.get("/allstocks",  [validator({ model: "Price", scope: "stock", source: "params" })],
+    asyncWrapper(async(req, res, next) => {
+        let price = await pricingService.getAllPrices();
+        if (!price) {
+            throw new NotFoundError(`No stocks were found`);
+        }
+        res.send(price);
+    })
+);
 module.exports = router;

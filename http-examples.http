@@ -1,0 +1,6 @@
+GET http://localhost:8080/api/pricing/MSFT HTTP/1.1
+Host: localhost:8080
+
+### get all stocks
+GET http://localhost:8080/api/pricing/allstocks HTTP/1.1
+Host: localhost:8080

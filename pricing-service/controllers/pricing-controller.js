@@ -8,20 +8,17 @@ const authMiddleware = require("../middleware/auth");
 const pricingService = new PricingService();
 
 // router.use([authMiddleware]);
-
 router.get(
-    "/:stock", [validator({ model: "Price", scope: "stock", source: "params" })],
+    "/instance",  
     asyncWrapper(async(req, res, next) => {
-        let price = pricingService.getCurrentPrice(req.params.stock);
+        let price = await pricingService.getProcessInfo();
         if (!price) {
             throw new NotFoundError(`Stock ${stock} was not found`);
         }
         res.send(price);
     })
 );
-
-
-router.get("/allstocks",  [validator({ model: "Price", scope: "stock", source: "params" })],
+router.get("/allstocks",
     asyncWrapper(async(req, res, next) => {
         let price = await pricingService.getAllPrices();
         if (!price) {
@@ -30,4 +27,19 @@ router.get("/allstocks",  [validator({ model: "Price", scope: "stock", source: "
         res.send(price);
     })
 );
+router.get(
+    "/:stock", [validator({ model: "Price", scope: "stock", source: "params" })],
+    asyncWrapper(async(req, res, next) => {
+        let price = await pricingService.getCurrentPrice(req.params.stock);
+        if (!price) {
+            throw new NotFoundError(`Stock ${stock} was not found`);
+        }
+        res.send(price);
+    })
+);
+
+
+
+
+
 module.exports = router;

@@ -23,8 +23,8 @@ module.exports = class PricingService {
         };
     }
 
-    getCurrentPrice(stock) {
-        return this.availableStocks[stock]();
+    async getCurrentPrice(stock) {
+        return await this.availableStocks[stock]();
     }
 
     getAllPrices() {
@@ -35,6 +35,23 @@ module.exports = class PricingService {
             resolve(prices);
         });
     }
+
+
+    async getProcessInfo() {
+
+       await new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve();
+            }, 3000);
+        });
+
+        return {
+            pid: process.pid,
+            uptime: process.uptime(),
+            memoryUsage: process.memoryUsage()
+        };
+    }
+
 
     /**
      *

@@ -5,6 +5,7 @@
   "scripts": {
     "preinstall": "npm i pm2 -g",
     "start": "node ./bin/www"
+    
   },
   "dependencies": {
     "bcrypt": "^3.0.6",

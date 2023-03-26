@@ -27,6 +27,7 @@ module.exports = {
             script: "./pricing-service/index.js",
             node_args: ["--inspect=0.0.0.0:9225"],
             watch: true,
+            instances: 4,
             ignore_watch: ["./.git"],
             env: {
                 NODE_ENV: "development",
